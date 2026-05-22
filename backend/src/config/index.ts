@@ -4,7 +4,7 @@ export const config = {
 
   jwt: {
     secret: process.env.JWT_SECRET || 'your-super-secret-jwt-key-change-in-production',
-    expiresIn: process.env.JWT_EXPIRES_IN || '7d',
+    expiresIn: (process.env.JWT_EXPIRES_IN || '7d') as string,
   },
 
   cors: {
@@ -13,7 +13,7 @@ export const config = {
 
   upload: {
     maxFileSize: 5 * 1024 * 1024, // 5MB
-    allowedMimeTypes: ['image/jpeg', 'image/png', 'image/gif', 'image/webp'],
+    allowedMimeTypes: ['image/jpeg', 'image/png', 'image/gif', 'image/webp'] as string[],
     uploadDir: process.env.UPLOAD_DIR || 'uploads',
   },
 
@@ -21,6 +21,6 @@ export const config = {
     defaultLimit: 20,
     maxLimit: 100,
   },
-} as const;
+};
 
 export type Config = typeof config;

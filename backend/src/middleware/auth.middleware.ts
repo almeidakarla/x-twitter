@@ -36,7 +36,7 @@ export const authenticate = (
 // Optional authentication - sets user if token present, but doesn't require it
 export const optionalAuth = (
   req: Request,
-  res: Response,
+  _res: Response,
   next: NextFunction
 ): void => {
   try {
