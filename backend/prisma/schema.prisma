@@ -1,0 +1,87 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  username  String   @unique
+  password  String
+  name      String
+  bio       String?
+  avatar    String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  tweets    Tweet[]
+  likes     Like[]
+  followers Follow[] @relation("following")
+  following Follow[] @relation("follower")
+
+  @@index([username])
+  @@index([email])
+}
+
+model Tweet {
+  id        String   @id @default(uuid())
+  content   String   @db.VarChar(280)
+  imageUrl  String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Author relation
+  authorId  String
+  author    User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
+
+  // Reply relation (for threads)
+  parentId  String?
+  parent    Tweet?   @relation("TweetReplies", fields: [parentId], references: [id], onDelete: SetNull)
+  replies   Tweet[]  @relation("TweetReplies")
+
+  // Likes
+  likes     Like[]
+
+  @@index([authorId])
+  @@index([parentId])
+  @@index([createdAt(sort: Desc)])
+}
+
+model Follow {
+  id          String   @id @default(uuid())
+  createdAt   DateTime @default(now())
+
+  // Follower (the user who is following)
+  followerId  String
+  follower    User     @relation("follower", fields: [followerId], references: [id], onDelete: Cascade)
+
+  // Following (the user being followed)
+  followingId String
+  following   User     @relation("following", fields: [followingId], references: [id], onDelete: Cascade)
+
+  @@unique([followerId, followingId])
+  @@index([followerId])
+  @@index([followingId])
+}
+
+model Like {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+
+  // User who liked
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  // Tweet that was liked
+  tweetId   String
+  tweet     Tweet    @relation(fields: [tweetId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, tweetId])
+  @@index([userId])
+  @@index([tweetId])
+}
