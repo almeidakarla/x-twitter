@@ -9,7 +9,7 @@ let supabase: SupabaseClient | null = null;
 if (supabaseUrl && supabaseKey) {
   supabase = createClient(supabaseUrl, supabaseKey, {
     realtime: {
-      transport: WebSocket,
+      transport: WebSocket as any,
     },
   });
 } else {
