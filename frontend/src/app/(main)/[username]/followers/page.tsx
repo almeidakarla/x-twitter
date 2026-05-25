@@ -27,7 +27,7 @@ export default function FollowersPage() {
       lastPage.hasMore ? lastPage.nextCursor : undefined,
   });
 
-  const followers = data?.pages.flatMap((page) => page.users) ?? [];
+  const followers = (data?.pages.flatMap((page) => page.users) ?? []).filter((user): user is User => !!user);
 
   return (
     <div>

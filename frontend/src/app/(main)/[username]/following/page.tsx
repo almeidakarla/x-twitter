@@ -27,7 +27,7 @@ export default function FollowingPage() {
       lastPage.hasMore ? lastPage.nextCursor : undefined,
   });
 
-  const following = data?.pages.flatMap((page) => page.users) ?? [];
+  const following = (data?.pages.flatMap((page) => page.users) ?? []).filter((user): user is User => !!user);
 
   return (
     <div>
