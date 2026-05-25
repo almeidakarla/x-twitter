@@ -25,7 +25,7 @@ FROM node:20-alpine AS runner
 WORKDIR /app
 
 # Install curl for healthcheck
-RUN apk add --no-cache curl
+RUN apk add --no-cache curl openssl
 
 # Copy package files
 COPY package*.json ./
