@@ -172,7 +172,7 @@ export default function ProfilePage() {
                 className="flex items-center gap-1 text-blue-400 hover:underline"
               >
                 <LinkIcon className="w-4 h-4" />
-                {profile.website.replace(/^https?:///, '')}
+                {profile.website.replace(/^https?:\/\//, '')}
               </a>
             )}
             <span className="flex items-center gap-1">
