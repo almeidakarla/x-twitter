@@ -1,3 +1,5 @@
+console.log('[DEBUG] Starting server...');
+
 import { createServer } from 'http';
 import { Server } from 'socket.io';
 import app from './app.js';
@@ -5,7 +7,10 @@ import { config } from './config/index.js';
 import { prisma } from './lib/prisma.js';
 import { setupSocketHandlers } from './services/socket.service.js';
 
+console.log('[DEBUG] All imports loaded successfully');
+
 const httpServer = createServer(app);
+console.log('[DEBUG] HTTP server created');
 
 // Socket.io setup for real-time updates
 const io = new Server(httpServer, {
