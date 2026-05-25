@@ -10,8 +10,9 @@ const router = Router();
 // Validation rules
 const createTweetValidation = [
   body('content')
-    .isLength({ min: 1, max: 280 })
-    .withMessage('Tweet must be between 1 and 280 characters'),
+    .optional({ values: 'falsy' })
+    .isLength({ max: 280 })
+    .withMessage('Tweet must be at most 280 characters'),
   body('parentId')
     .optional()
     .isUUID()

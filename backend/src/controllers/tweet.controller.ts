@@ -54,6 +54,13 @@ export const createTweet = async (req: Request, res: Response): Promise<void> =>
     const { content, parentId } = req.body;
     const imageUrl = req.file ? await uploadToSupabase(req.file) : null;
 
+    // Require either content or image
+    const hasContent = content && content.trim().length > 0;
+    if (!hasContent && !imageUrl) {
+      res.status(400).json({ error: 'Tweet must have either text or an image' });
+      return;
+    }
+
     // If it's a reply, verify parent exists
     if (parentId) {
       const parentTweet = await prisma.tweet.findUnique({
@@ -68,7 +75,7 @@ export const createTweet = async (req: Request, res: Response): Promise<void> =>
 
     const tweet = await prisma.tweet.create({
       data: {
-        content,
+        content: content?.trim() || '',
         imageUrl,
         authorId: req.user!.userId,
         parentId: parentId || null,
