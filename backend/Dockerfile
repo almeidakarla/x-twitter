@@ -49,5 +49,5 @@ ENV NODE_ENV=production
 # Expose port
 EXPOSE 3001
 
-# Start command with migration
-CMD ["sh", "-c", "npx prisma db push --skip-generate && node dist/index.js"]
+# Start command with migration and debugging
+CMD ["sh", "-c", "npx prisma db push --skip-generate && echo '=== Starting Node.js ===' && ls -la dist/ && echo '=== Running node ===' && node dist/index.js 2>&1"]
