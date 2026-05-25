@@ -60,3 +60,11 @@ input[type="number"]::-webkit-outer-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
+
+/* Ensure all clickable elements show pointer cursor */
+button,
+[role="button"],
+a,
+.cursor-pointer {
+  cursor: pointer;
+}

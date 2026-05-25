@@ -3,6 +3,7 @@ import { body } from 'express-validator';
 import * as authController from '../controllers/auth.controller.js';
 import { authenticate } from '../middleware/auth.middleware.js';
 import { validate } from '../middleware/validate.middleware.js';
+import { uploadImage } from '../middleware/upload.middleware.js';
 
 const router = Router();
 
@@ -39,6 +40,6 @@ const loginValidation = [
 router.post('/register', registerValidation, validate, authController.register);
 router.post('/login', loginValidation, validate, authController.login);
 router.get('/me', authenticate, authController.getCurrentUser);
-router.put('/profile', authenticate, authController.updateProfile);
+router.put('/profile', authenticate, uploadImage.single('avatar'), authController.updateProfile);
 
 export default router;

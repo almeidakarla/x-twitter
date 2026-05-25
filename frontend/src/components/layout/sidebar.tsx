@@ -35,7 +35,7 @@ export function Sidebar() {
 
   const navItems = [
     { href: '/home', icon: Home, label: 'Home' },
-    { href: '/search', icon: Search, label: 'Explore' },
+    { href: '/explore', icon: Search, label: 'Explore' },
     { href: '/notifications', icon: Bell, label: 'Notifications' },
     { href: '/messages', icon: MessageCircle, label: 'Messages' },
     { href: '/bookmarks', icon: Bookmark, label: 'Bookmarks' },

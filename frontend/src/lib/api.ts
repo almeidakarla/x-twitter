@@ -70,12 +70,10 @@ export const authApi = {
     return response.data;
   },
 
-  updateProfile: async (data: {
-    name?: string;
-    bio?: string;
-    avatar?: string;
-  }): Promise<{ user: User }> => {
-    const response = await api.put<{ user: User }>('/auth/profile', data);
+  updateProfile: async (data: FormData): Promise<{ user: User }> => {
+    const response = await api.put<{ user: User }>('/auth/profile', data, {
+      headers: { 'Content-Type': 'multipart/form-data' },
+    });
     return response.data;
   },
 };

@@ -97,14 +97,13 @@ describe('ComposeTweet', () => {
   });
 
   it('shows warning color when approaching character limit', async () => {
-    const user = userEvent.setup();
     render(<ComposeTweet />);
 
     const textarea = screen.getByPlaceholderText(/what's happening/i);
-    
-    // Type 265 characters (15 remaining)
+
+    // Use fireEvent for faster input of long text (265 characters = 15 remaining)
     const longText = 'a'.repeat(265);
-    await user.type(textarea, longText);
+    fireEvent.change(textarea, { target: { value: longText } });
 
     // Character count should show 15 with warning color
     const charCount = screen.getByText('15');

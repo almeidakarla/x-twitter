@@ -128,14 +128,20 @@ export const getCurrentUser = async (req: Request, res: Response): Promise<void>
 
 export const updateProfile = async (req: Request, res: Response): Promise<void> => {
   try {
-    const { name, bio, avatar } = req.body;
+    const { name, bio } = req.body;
+
+    // Handle avatar file upload
+    let avatarUrl: string | undefined;
+    if (req.file) {
+      avatarUrl = `/uploads/${req.file.filename}`;
+    }
 
     const user = await prisma.user.update({
       where: { id: req.user!.userId },
       data: {
         ...(name && { name }),
         ...(bio !== undefined && { bio }),
-        ...(avatar !== undefined && { avatar }),
+        ...(avatarUrl && { avatar: avatarUrl }),
       },
     });
 

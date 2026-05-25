@@ -5,21 +5,18 @@ export const searchUsers = async (req: Request, res: Response): Promise<void> =>
   try {
     const { q, limit = 20 } = req.query;
     const currentUserId = req.user?.userId;
-    const searchQuery = String(q).trim();
+    const searchQuery = q ? String(q).trim() : '';
 
-    if (!searchQuery) {
-      res.json({ users: [] });
-      return;
-    }
-
-    // Search users by name or username
+    // Search users by name or username, or return all users if no query
     const users = await prisma.user.findMany({
-      where: {
-        OR: [
-          { username: { contains: searchQuery, mode: 'insensitive' } },
-          { name: { contains: searchQuery, mode: 'insensitive' } },
-        ],
-      },
+      where: searchQuery
+        ? {
+            OR: [
+              { username: { contains: searchQuery, mode: 'insensitive' } },
+              { name: { contains: searchQuery, mode: 'insensitive' } },
+            ],
+          }
+        : {},
       select: {
         id: true,
         username: true,

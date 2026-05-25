@@ -59,13 +59,15 @@ export function EditProfileModal({ isOpen, onClose, user }: EditProfileModalProp
   const handleSave = async () => {
     setIsLoading(true);
     try {
-      // For now, we'll just update name and bio
-      // Avatar upload would need a separate endpoint
-      const response = await authApi.updateProfile({
-        name,
-        bio,
-        avatar: avatar || undefined,
-      });
+      const formData = new FormData();
+      formData.append('name', name);
+      formData.append('bio', bio);
+
+      if (avatarFile) {
+        formData.append('avatar', avatarFile);
+      }
+
+      const response = await authApi.updateProfile(formData);
 
       updateUser(response.user);
       queryClient.invalidateQueries({ queryKey: ['profile', user.username] });
