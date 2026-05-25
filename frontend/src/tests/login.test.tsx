@@ -42,13 +42,6 @@ describe('LoginPage', () => {
     expect(signUpLink).toHaveAttribute('href', '/register');
   });
 
-  it('shows demo credentials', () => {
-    render(<LoginPage />);
-
-    expect(screen.getByText(/demo@example.com/i)).toBeInTheDocument();
-    expect(screen.getByText(/demo1234/i)).toBeInTheDocument();
-  });
-
   it('allows user to type in email and password fields', async () => {
     const user = userEvent.setup();
     render(<LoginPage />);

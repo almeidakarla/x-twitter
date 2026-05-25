@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { render, screen, waitFor } from './test-utils';
+import { render, screen, waitFor, fireEvent } from './test-utils';
 import userEvent from '@testing-library/user-event';
 import { ComposeTweet } from '@/components/tweet/compose-tweet';
 import { tweetApi } from '@/lib/api';
@@ -112,14 +112,13 @@ describe('ComposeTweet', () => {
   });
 
   it('shows error color when over character limit', async () => {
-    const user = userEvent.setup();
     render(<ComposeTweet />);
 
     const textarea = screen.getByPlaceholderText(/what's happening/i);
-    
-    // Type 285 characters (5 over limit)
+
+    // Use fireEvent for faster input of long text
     const longText = 'a'.repeat(285);
-    await user.type(textarea, longText);
+    fireEvent.change(textarea, { target: { value: longText } });
 
     // Character count should show -5 with error color
     const charCount = screen.getByText('-5');
@@ -127,15 +126,14 @@ describe('ComposeTweet', () => {
   });
 
   it('disables post button when over character limit', async () => {
-    const user = userEvent.setup();
     render(<ComposeTweet />);
 
     const textarea = screen.getByPlaceholderText(/what's happening/i);
     const postButton = screen.getByRole('button', { name: /post/i });
-    
-    // Type 285 characters
+
+    // Use fireEvent for faster input of long text
     const longText = 'a'.repeat(285);
-    await user.type(textarea, longText);
+    fireEvent.change(textarea, { target: { value: longText } });
 
     expect(postButton).toBeDisabled();
   });
