@@ -50,4 +50,4 @@ ENV NODE_ENV=production
 EXPOSE 3001
 
 # Start command with migration
-CMD ["sh", "-c", "npx prisma migrate deploy && node dist/index.js"]
+CMD ["sh", "-c", "npx prisma db push --skip-generate && node dist/index.js"]
