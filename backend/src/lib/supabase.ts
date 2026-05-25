@@ -1,14 +1,27 @@
-import { createClient } from '@supabase/supabase-js';
+import { createClient, SupabaseClient } from '@supabase/supabase-js';
 
-const supabaseUrl = process.env.SUPABASE_URL || '';
-const supabaseKey = process.env.SUPABASE_ANON_KEY || '';
+const supabaseUrl = process.env.SUPABASE_URL;
+const supabaseKey = process.env.SUPABASE_ANON_KEY;
 
-export const supabase = createClient(supabaseUrl, supabaseKey);
+// Only create client if credentials are provided
+let supabase: SupabaseClient | null = null;
+if (supabaseUrl && supabaseKey) {
+  supabase = createClient(supabaseUrl, supabaseKey);
+} else {
+  console.warn('Supabase credentials not configured - image uploads will be disabled');
+}
+
+export { supabase };
 
 export const uploadToSupabase = async (
   file: Express.Multer.File,
   bucket: string = 'images'
 ): Promise<string | null> => {
+  if (!supabase) {
+    console.warn('Supabase not configured - skipping image upload');
+    return null;
+  }
+
   try {
     const fileExt = file.originalname.split('.').pop();
     const fileName = `${Date.now()}-${Math.random().toString(36).substring(7)}.${fileExt}`;
