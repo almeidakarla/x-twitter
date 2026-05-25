@@ -12,8 +12,19 @@ export const config = {
   },
 
   upload: {
-    maxFileSize: 5 * 1024 * 1024, // 5MB
-    allowedMimeTypes: ['image/jpeg', 'image/png', 'image/gif', 'image/webp'] as string[],
+    maxFileSize: 10 * 1024 * 1024, // 10MB
+    allowedMimeTypes: [
+      'image/jpeg',
+      'image/png',
+      'image/gif',
+      'image/webp',
+      'image/heic',
+      'image/heif',
+      'image/avif',
+      'image/svg+xml',
+      'image/bmp',
+      'image/tiff',
+    ] as string[],
     uploadDir: process.env.UPLOAD_DIR || 'uploads',
   },
 
