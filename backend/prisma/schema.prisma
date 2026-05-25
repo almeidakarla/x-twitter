@@ -50,6 +50,10 @@ model Tweet {
   replies   Tweet[]  @relation("TweetReplies")
 
   // Likes
+  likes         Like[]
+
+  // Notifications
+  notifications Notification[]
 
   @@index([authorId])
   @@index([parentId])
