@@ -41,14 +41,15 @@ export default function LandingPage() {
   }
 
   return (
-    <div className="min-h-screen flex flex-col lg:flex-row bg-black">
-      {/* Left side - Animated Logo */}
-      <div className="hidden lg:flex lg:w-1/2 items-center justify-center relative overflow-hidden">
-        <AnimatedXLogo className="w-[450px] h-[450px]" />
-      </div>
+    <div className="min-h-screen flex flex-col bg-black">
+      <div className="flex-1 flex flex-col lg:flex-row">
+        {/* Left side - Animated Logo */}
+        <div className="hidden lg:flex lg:w-1/2 items-center justify-center relative overflow-hidden">
+          <AnimatedXLogo className="w-[450px] h-[450px]" />
+        </div>
 
-      {/* Right side - Auth options */}
-      <div className="flex-1 flex flex-col justify-center px-6 sm:px-12 lg:px-16 py-12">
+        {/* Right side - Auth options */}
+        <div className="flex-1 flex flex-col justify-center px-6 sm:px-12 lg:px-16 py-8 lg:py-12">
         {/* Mobile logo */}
         <div className="lg:hidden mb-8">
           <svg viewBox="0 0 24 24" className="w-10 h-10 text-white fill-current">
@@ -125,11 +126,12 @@ export default function LandingPage() {
             </Link>
           </div>
         </div>
+        </div>
       </div>
 
       {/* Footer */}
-      <footer className="absolute bottom-0 left-0 right-0 p-4">
-        <nav className="flex flex-wrap justify-center gap-4 text-xs text-gray-500">
+      <footer className="p-4 mt-auto">
+        <nav className="flex flex-wrap justify-center gap-x-4 gap-y-1 text-xs text-gray-500">
           <span className="hover:underline cursor-pointer">About</span>
           <span className="hover:underline cursor-pointer">Help Center</span>
           <span className="hover:underline cursor-pointer">Terms of Service</span>

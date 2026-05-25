@@ -14,7 +14,8 @@
       "Bash(cat:*)",
       "Bash(docker:*)",
       "Bash(npm pkg set:*)",
-      "Bash(npm run test:run:*)"
+      "Bash(npm run test:run:*)",
+      "Bash(npx tsc:*)"
     ]
   }
 }
