@@ -23,18 +23,19 @@ export { io };
 
 // Start server
 const start = async () => {
+  // Start HTTP server FIRST so healthcheck can pass
+  httpServer.listen(config.port, () => {
+    console.log(`Server running on http://localhost:${config.port}`);
+    console.log(`Environment: ${config.nodeEnv}`);
+  });
+
+  // Connect to database in background
   try {
-    // Test database connection
     await prisma.$connect();
     console.log('Database connected successfully');
-
-    httpServer.listen(config.port, () => {
-      console.log(`Server running on http://localhost:${config.port}`);
-      console.log(`Environment: ${config.nodeEnv}`);
-    });
   } catch (error) {
-    console.error('Failed to start server:', error);
-    process.exit(1);
+    console.error('Failed to connect to database:', error);
+    // Don't exit - let healthcheck fail naturally if DB is down
   }
 };
 

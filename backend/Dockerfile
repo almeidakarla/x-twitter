@@ -25,7 +25,7 @@ FROM node:20-slim AS runner
 WORKDIR /app
 
 # Install curl for healthcheck and openssl for Prisma
-RUN apt-get update && apt-get install -y curl openssl && rm -rf /var/lib/apt/lists/*
+RUN apt-get update && apt-get install -y curl openssl libssl-dev && rm -rf /var/lib/apt/lists/*
 
 # Copy package files
 COPY package*.json ./
