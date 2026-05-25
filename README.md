@@ -13,12 +13,13 @@ A full-stack Twitter/X clone built with modern web technologies. This project de
 - **Testing**: Jest + Supertest
 
 ### Frontend
-- **Framework**: Next.js 15 (App Router)
+- **Framework**: Next.js 16 (App Router)
 - **Language**: TypeScript
 - **Styling**: Tailwind CSS
 - **State Management**: Zustand
 - **Data Fetching**: TanStack React Query
 - **Real-time**: Socket.io Client
+- **Testing**: Vitest + React Testing Library
 
 ### Infrastructure
 - **Containerization**: Docker & Docker Compose
@@ -239,6 +240,8 @@ Frontend runs on http://localhost:3000
 
 ### Backend Tests
 
+**Note:** Backend integration tests require a running PostgreSQL database. Start the database with `docker compose up -d db` before running tests.
+
 ```bash
 cd backend
 
@@ -255,6 +258,11 @@ open coverage/lcov-report/index.html
 **Expected coverage: 80%+**
 
 ### Frontend Tests (Integration)
+
+Frontend tests cover the main user flows:
+- **Login flow**: Form validation, API calls, auth state management
+- **Create tweet**: Character limits, image upload, form submission
+- **Follow/unfollow**: Button states, API interactions, error handling
 
 ```bash
 cd frontend

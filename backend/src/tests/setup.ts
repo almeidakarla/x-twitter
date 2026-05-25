@@ -1,25 +1,12 @@
-import { prisma } from '../lib/prisma.js';
+import dotenv from 'dotenv';
+import path from 'path';
 
-// Set test environment
+// Load environment variables from .env file
+dotenv.config({ path: path.resolve(__dirname, '../../.env') });
+
+// Set test environment overrides
 process.env.NODE_ENV = 'test';
-process.env.JWT_SECRET = 'test-secret-key';
-
-// Clean up database before tests
-beforeAll(async () => {
-  // Ensure we're using test database
-  console.log('Setting up test environment...');
-});
-
-// Clean up after all tests
-afterAll(async () => {
-  // Clean up all data
-  await prisma.like.deleteMany();
-  await prisma.follow.deleteMany();
-  await prisma.tweet.deleteMany();
-  await prisma.user.deleteMany();
-
-  await prisma.$disconnect();
-});
+process.env.JWT_SECRET = process.env.JWT_SECRET || 'test-secret-key';
 
 // Global test timeout
 jest.setTimeout(30000);
