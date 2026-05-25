@@ -16,7 +16,8 @@
       "Bash(npm pkg set:*)",
       "Bash(npm run test:run:*)",
       "Bash(npx tsc:*)",
-      "Bash(cd:*)"
+      "Bash(cd:*)",
+      "Bash(npx prisma:*)"
     ]
   }
 }

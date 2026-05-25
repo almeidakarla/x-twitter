@@ -8,7 +8,8 @@ const router = Router();
 
 const searchValidation = [
   query('q')
-    .isLength({ min: 1, max: 100 })
+    .optional()
+    .isLength({ max: 100 })
     .withMessage('Search query must be between 1 and 100 characters'),
   query('limit')
     .optional()
