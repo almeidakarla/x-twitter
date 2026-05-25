@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import { prisma } from '../lib/prisma.js';
 import { hashPassword, comparePassword, generateToken } from '../utils/auth.utils.js';
+import { uploadToSupabase } from '../lib/supabase.js';
 
 // Exclude password from user response
 const excludePassword = <T extends { password?: string }>(user: T): Omit<T, 'password'> => {
@@ -130,10 +131,11 @@ export const updateProfile = async (req: Request, res: Response): Promise<void> 
   try {
     const { name, bio, location, website } = req.body;
 
-    // Handle avatar file upload
+    // Handle avatar file upload to Supabase
     let avatarUrl: string | undefined;
     if (req.file) {
-      avatarUrl = `/uploads/${req.file.filename}`;
+      const uploadedUrl = await uploadToSupabase(req.file);
+      avatarUrl = uploadedUrl || undefined;
     }
 
     const user = await prisma.user.update({

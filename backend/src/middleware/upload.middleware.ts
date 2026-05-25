@@ -1,25 +1,8 @@
 import multer from 'multer';
-import path from 'path';
-import { v4 as uuidv4 } from 'uuid';
-import fs from 'fs';
 import { config } from '../config/index.js';
 
-// Ensure upload directory exists
-const uploadDir = path.join(process.cwd(), config.upload.uploadDir);
-if (!fs.existsSync(uploadDir)) {
-  fs.mkdirSync(uploadDir, { recursive: true });
-}
-
-const storage = multer.diskStorage({
-  destination: (_req, _file, cb) => {
-    cb(null, uploadDir);
-  },
-  filename: (_req, file, cb) => {
-    const ext = path.extname(file.originalname);
-    const filename = `${uuidv4()}${ext}`;
-    cb(null, filename);
-  },
-});
+// Use memory storage for Supabase uploads
+const storage = multer.memoryStorage();
 
 const fileFilter = (
   _req: Express.Request,

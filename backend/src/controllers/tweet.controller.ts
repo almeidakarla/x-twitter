@@ -3,6 +3,7 @@ import { prisma } from '../lib/prisma.js';
 import { config } from '../config/index.js';
 import { emitNewTweet, emitTweetDeleted, emitTweetLiked, emitTweetUnliked } from '../services/socket.service.js';
 import { createNotification } from './notification.controller.js';
+import { uploadToSupabase } from '../lib/supabase.js';
 
 // Helper to format tweet response
 const formatTweet = (tweet: any, currentUserId?: string) => ({
@@ -51,7 +52,7 @@ const tweetInclude = (currentUserId?: string) => ({
 export const createTweet = async (req: Request, res: Response): Promise<void> => {
   try {
     const { content, parentId } = req.body;
-    const imageUrl = req.file ? `/uploads/${req.file.filename}` : null;
+    const imageUrl = req.file ? await uploadToSupabase(req.file) : null;
 
     // If it's a reply, verify parent exists
     if (parentId) {
