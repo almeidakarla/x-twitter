@@ -70,9 +70,9 @@ A full-stack Twitter/X clone built with modern web technologies. This project de
 
 ## Live Demo
 
-The application is deployed on Railway:
-- **Frontend**: [Your Railway Frontend URL]
-- **Backend API**: [Your Railway Backend URL]
+The application is deployed and accessible at:
+- **Frontend**: https://x-twitter-karla.vercel.app
+- **Backend API**: https://x-twitter-production-8f55.up.railway.app
 
 ## Architecture Decisions
 
