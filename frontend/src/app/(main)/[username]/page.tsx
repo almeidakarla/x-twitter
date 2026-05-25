@@ -2,7 +2,7 @@
 
 import { useEffect, useCallback, useState } from 'react';
 import { useParams } from 'next/navigation';
-import { ArrowLeft, Calendar } from 'lucide-react';
+import { ArrowLeft, Calendar, MapPin, LinkIcon } from 'lucide-react';
 import Link from 'next/link';
 import { useQuery, useInfiniteQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { userApi, tweetApi, followApi } from '@/lib/api';
@@ -157,9 +157,28 @@ export default function ProfilePage() {
 
           {profile.bio && <p className="mt-3">{profile.bio}</p>}
 
-          <div className="flex items-center gap-2 text-gray-500 mt-3">
-            <Calendar className="w-4 h-4" />
-            <span>Joined {format(new Date(profile.createdAt), 'MMMM yyyy')}</span>
+          <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-gray-500 mt-3">
+            {profile.location && (
+              <span className="flex items-center gap-1">
+                <MapPin className="w-4 h-4" />
+                {profile.location}
+              </span>
+            )}
+            {profile.website && (
+              <a
+                href={profile.website.startsWith('http') ? profile.website : `https://${profile.website}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-1 text-blue-400 hover:underline"
+              >
+                <LinkIcon className="w-4 h-4" />
+                {profile.website.replace(/^https?:///, '')}
+              </a>
+            )}
+            <span className="flex items-center gap-1">
+              <Calendar className="w-4 h-4" />
+              Joined {format(new Date(profile.createdAt), 'MMMM yyyy')}
+            </span>
           </div>
 
           <div className="flex gap-4 mt-3">

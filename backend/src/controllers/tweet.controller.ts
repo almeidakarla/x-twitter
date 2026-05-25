@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import { prisma } from '../lib/prisma.js';
 import { config } from '../config/index.js';
 import { emitNewTweet, emitTweetDeleted, emitTweetLiked, emitTweetUnliked } from '../services/socket.service.js';
+import { createNotification } from './notification.controller.js';
 
 // Helper to format tweet response
 const formatTweet = (tweet: any, currentUserId?: string) => ({
@@ -78,6 +79,17 @@ export const createTweet = async (req: Request, res: Response): Promise<void> =>
 
     // Emit real-time update
     emitNewTweet(formattedTweet);
+
+    // Create notification for reply
+    if (parentId && tweet.parent) {
+      const parentTweet = await prisma.tweet.findUnique({
+        where: { id: parentId },
+        select: { authorId: true },
+      });
+      if (parentTweet) {
+        await createNotification("REPLY", parentTweet.authorId, req.user!.userId, tweet.id);
+      }
+    }
 
     res.status(201).json({ tweet: formattedTweet });
   } catch (error) {
@@ -305,6 +317,9 @@ export const likeTweet = async (req: Request, res: Response): Promise<void> => {
 
     // Emit real-time update
     emitTweetLiked(id, userId, likesCount);
+
+    // Create notification for like
+    await createNotification("LIKE", tweet.authorId, userId, id);
 
     res.json({ message: 'Tweet liked', likesCount });
   } catch (error) {

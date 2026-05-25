@@ -20,6 +20,8 @@ interface EditProfileModalProps {
 export function EditProfileModal({ isOpen, onClose, user }: EditProfileModalProps) {
   const [name, setName] = useState(user.name);
   const [bio, setBio] = useState(user.bio || '');
+  const [location, setLocation] = useState(user.location || '');
+  const [website, setWebsite] = useState(user.website || '');
   const [avatar, setAvatar] = useState<string | null>(user.avatar || null);
   const [banner, setBanner] = useState<string | null>(null);
   const [avatarFile, setAvatarFile] = useState<File | null>(null);
@@ -62,6 +64,8 @@ export function EditProfileModal({ isOpen, onClose, user }: EditProfileModalProp
       const formData = new FormData();
       formData.append('name', name);
       formData.append('bio', bio);
+      formData.append('location', location);
+      formData.append('website', website);
 
       if (avatarFile) {
         formData.append('avatar', avatarFile);
@@ -205,6 +209,8 @@ export function EditProfileModal({ isOpen, onClose, user }: EditProfileModalProp
             <div>
               <label className="block text-sm text-gray-500 mb-1">Location</label>
               <Input
+                value={location}
+                onChange={(e) => setLocation(e.target.value)}
                 placeholder="Add your location"
                 className="bg-transparent border-gray-800 focus:border-blue-500"
               />
@@ -213,6 +219,8 @@ export function EditProfileModal({ isOpen, onClose, user }: EditProfileModalProp
             <div>
               <label className="block text-sm text-gray-500 mb-1">Website</label>
               <Input
+                value={website}
+                onChange={(e) => setWebsite(e.target.value)}
                 placeholder="Add your website"
                 className="bg-transparent border-gray-800 focus:border-blue-500"
               />

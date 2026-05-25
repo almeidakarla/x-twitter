@@ -15,6 +15,8 @@ export const getUserProfile = async (req: Request, res: Response): Promise<void>
         name: true,
         bio: true,
         avatar: true,
+        location: true,
+        website: true,
         createdAt: true,
         _count: {
           select: {
@@ -87,6 +89,8 @@ export const getFollowers = async (req: Request, res: Response): Promise<void> =
             name: true,
             bio: true,
             avatar: true,
+        location: true,
+        website: true,
           },
         },
       },
@@ -156,6 +160,8 @@ export const getFollowing = async (req: Request, res: Response): Promise<void> =
             name: true,
             bio: true,
             avatar: true,
+        location: true,
+        website: true,
           },
         },
       },

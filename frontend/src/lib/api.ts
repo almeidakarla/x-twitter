@@ -186,3 +186,25 @@ export const searchApi = {
     return response.data;
   },
 };
+
+// Notification API
+export const notificationApi = {
+  getNotifications: async (cursor?: string): Promise<{ notifications: any[]; nextCursor: string | null; hasMore: boolean }> => {
+    const params = cursor ? { cursor } : {};
+    const response = await api.get<{ notifications: any[]; nextCursor: string | null; hasMore: boolean }>('/notifications', { params });
+    return response.data;
+  },
+
+  getUnreadCount: async (): Promise<{ count: number }> => {
+    const response = await api.get<{ count: number }>('/notifications/unread-count');
+    return response.data;
+  },
+
+  markAsRead: async (id?: string): Promise<void> => {
+    if (id) {
+      await api.put(`/notifications/${id}/read`);
+    } else {
+      await api.put('/notifications/read');
+    }
+  },
+};

@@ -7,6 +7,7 @@ import userRoutes from './routes/user.routes.js';
 import tweetRoutes from './routes/tweet.routes.js';
 import followRoutes from './routes/follow.routes.js';
 import searchRoutes from './routes/search.routes.js';
+import notificationRoutes from './routes/notification.routes.js';
 
 const app: Express = express();
 
@@ -32,6 +33,7 @@ app.use('/api/users', userRoutes);
 app.use('/api/tweets', tweetRoutes);
 app.use('/api/follows', followRoutes);
 app.use('/api/search', searchRoutes);
+app.use('/api/notifications', notificationRoutes);
 
 // 404 handler
 app.use((_req: Request, res: Response) => {

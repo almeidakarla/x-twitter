@@ -5,6 +5,8 @@ export interface User {
   name: string;
   bio: string | null;
   avatar: string | null;
+  location: string | null;
+  website: string | null;
   createdAt: string;
   followersCount?: number;
   followingCount?: number;
@@ -25,6 +27,8 @@ export interface Tweet {
     username: string;
     name: string;
     avatar: string | null;
+  location: string | null;
+  website: string | null;
   };
   isLiked: boolean;
   likesCount: number;
@@ -53,4 +57,21 @@ export interface PaginatedResponse<T> {
 export interface ApiError {
   error: string;
   details?: Array<{ field: string; message: string }>;
+}
+
+export interface Notification {
+  id: string;
+  type: 'LIKE' | 'REPLY' | 'FOLLOW' | 'MENTION';
+  read: boolean;
+  createdAt: string;
+  actor: {
+    id: string;
+    username: string;
+    name: string;
+    avatar: string | null;
+  };
+  tweet?: {
+    id: string;
+    content: string;
+  } | null;
 }

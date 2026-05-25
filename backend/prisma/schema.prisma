@@ -16,14 +16,18 @@ model User {
   name      String
   bio       String?
   avatar    String?
+  location  String?
+  website   String?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
   // Relations
-  tweets    Tweet[]
-  likes     Like[]
+  tweets            Tweet[]
+  likes             Like[]
   followers Follow[] @relation("following")
-  following Follow[] @relation("follower")
+  following         Follow[] @relation("follower")
+  notifications     Notification[] @relation("notificationRecipient")
+  notificationsSent Notification[] @relation("notificationActor")
 
   @@index([username])
   @@index([email])
@@ -46,7 +50,6 @@ model Tweet {
   replies   Tweet[]  @relation("TweetReplies")
 
   // Likes
-  likes     Like[]
 
   @@index([authorId])
   @@index([parentId])
@@ -85,4 +88,33 @@ model Like {
   @@unique([userId, tweetId])
   @@index([userId])
   @@index([tweetId])
+}
+
+model Notification {
+  id        String           @id @default(uuid())
+  type      NotificationType
+  read      Boolean          @default(false)
+  createdAt DateTime         @default(now())
+
+  // Recipient of the notification
+  userId    String
+  user      User             @relation("notificationRecipient", fields: [userId], references: [id], onDelete: Cascade)
+
+  // Actor who triggered the notification
+  actorId   String
+  actor     User             @relation("notificationActor", fields: [actorId], references: [id], onDelete: Cascade)
+
+  // Related tweet (for likes, replies, mentions)
+  tweetId   String?
+  tweet     Tweet?           @relation(fields: [tweetId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([createdAt(sort: Desc)])
+}
+
+enum NotificationType {
+  LIKE
+  REPLY
+  FOLLOW
+  MENTION
 }

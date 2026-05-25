@@ -8,15 +8,17 @@ export const searchUsers = async (req: Request, res: Response): Promise<void> =>
     const searchQuery = q ? String(q).trim() : '';
 
     // Search users by name or username, or return all users if no query
+    // Exclude current user from results
     const users = await prisma.user.findMany({
-      where: searchQuery
-        ? {
-            OR: [
-              { username: { contains: searchQuery, mode: 'insensitive' } },
-              { name: { contains: searchQuery, mode: 'insensitive' } },
-            ],
-          }
-        : {},
+      where: {
+        ...(currentUserId && { NOT: { id: currentUserId } }),
+        ...(searchQuery && {
+          OR: [
+            { username: { contains: searchQuery, mode: 'insensitive' } },
+            { name: { contains: searchQuery, mode: 'insensitive' } },
+          ],
+        }),
+      },
       select: {
         id: true,
         username: true,
