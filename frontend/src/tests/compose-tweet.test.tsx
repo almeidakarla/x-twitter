@@ -33,6 +33,9 @@ describe('ComposeTweet', () => {
     name: 'Test User',
     bio: null,
     avatar: null,
+    banner: null,
+    location: null,
+    website: null,
     createdAt: new Date().toISOString(),
   };
 
@@ -149,7 +152,7 @@ describe('ComposeTweet', () => {
         createdAt: new Date().toISOString(),
         authorId: '1',
         parentId: null,
-        author: mockUser,
+        author: { id: mockUser.id, username: mockUser.username, name: mockUser.name, avatar: mockUser.avatar, location: mockUser.location, website: mockUser.website },
         isLiked: false,
         likesCount: 0,
         repliesCount: 0,
@@ -203,7 +206,7 @@ describe('ComposeTweet', () => {
         createdAt: new Date().toISOString(),
         authorId: '1',
         parentId: null,
-        author: mockUser,
+        author: { id: mockUser.id, username: mockUser.username, name: mockUser.name, avatar: mockUser.avatar, location: mockUser.location, website: mockUser.website },
         isLiked: false,
         likesCount: 0,
         repliesCount: 0,

@@ -40,6 +40,6 @@ const loginValidation = [
 router.post('/register', registerValidation, validate, authController.register);
 router.post('/login', loginValidation, validate, authController.login);
 router.get('/me', authenticate, authController.getCurrentUser);
-router.put('/profile', authenticate, uploadImage.single('avatar'), authController.updateProfile);
+router.put('/profile', authenticate, uploadImage.fields([{ name: 'avatar', maxCount: 1 }, { name: 'banner', maxCount: 1 }]), authController.updateProfile);
 
 export default router;

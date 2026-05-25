@@ -117,7 +117,15 @@ export default function ProfilePage() {
       </header>
 
       {/* Banner */}
-      <div className="h-32 sm:h-48 bg-gray-800" />
+      <div className="h-32 sm:h-48 bg-gray-800 relative">
+        {profile.banner && (
+          <img
+            src={profile.banner}
+            alt="Profile banner"
+            className="w-full h-full object-cover"
+          />
+        )}
+      </div>
 
       {/* Profile info */}
       <div className="px-4 pb-4 border-b border-gray-800">

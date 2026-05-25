@@ -130,12 +130,20 @@ export const getCurrentUser = async (req: Request, res: Response): Promise<void>
 export const updateProfile = async (req: Request, res: Response): Promise<void> => {
   try {
     const { name, bio, location, website } = req.body;
+    const files = req.files as { [fieldname: string]: Express.Multer.File[] } | undefined;
 
     // Handle avatar file upload to Supabase
     let avatarUrl: string | undefined;
-    if (req.file) {
-      const uploadedUrl = await uploadToSupabase(req.file);
+    if (files?.avatar?.[0]) {
+      const uploadedUrl = await uploadToSupabase(files.avatar[0]);
       avatarUrl = uploadedUrl || undefined;
+    }
+
+    // Handle banner file upload to Supabase
+    let bannerUrl: string | undefined;
+    if (files?.banner?.[0]) {
+      const uploadedUrl = await uploadToSupabase(files.banner[0]);
+      bannerUrl = uploadedUrl || undefined;
     }
 
     const user = await prisma.user.update({
@@ -146,6 +154,7 @@ export const updateProfile = async (req: Request, res: Response): Promise<void> 
         ...(location !== undefined && { location: location || null }),
         ...(website !== undefined && { website: website || null }),
         ...(avatarUrl && { avatar: avatarUrl }),
+        ...(bannerUrl && { banner: bannerUrl }),
       },
     });
 

@@ -66,6 +66,9 @@ describe('LoginPage', () => {
         name: 'Test User',
         bio: null,
         avatar: null,
+        banner: null,
+        location: null,
+        website: null,
         createdAt: new Date().toISOString(),
       },
       token: 'mock-token',
@@ -125,7 +128,7 @@ describe('LoginPage', () => {
 
     // Resolve the login
     resolveLogin!({
-      user: { id: '1', email: 'test@example.com', username: 'test', name: 'Test', bio: null, avatar: null, createdAt: new Date().toISOString() },
+      user: { id: '1', email: 'test@example.com', username: 'test', name: 'Test', bio: null, avatar: null, banner: null, location: null, website: null, createdAt: new Date().toISOString() },
       token: 'token',
     });
   });

@@ -23,8 +23,9 @@ export function EditProfileModal({ isOpen, onClose, user }: EditProfileModalProp
   const [location, setLocation] = useState(user.location || '');
   const [website, setWebsite] = useState(user.website || '');
   const [avatar, setAvatar] = useState<string | null>(user.avatar || null);
-  const [banner, setBanner] = useState<string | null>(null);
+  const [banner, setBanner] = useState<string | null>(user.banner || null);
   const [avatarFile, setAvatarFile] = useState<File | null>(null);
+  const [bannerFile, setBannerFile] = useState<File | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
   const avatarInputRef = useRef<HTMLInputElement>(null);
@@ -50,6 +51,7 @@ export function EditProfileModal({ isOpen, onClose, user }: EditProfileModalProp
   const handleBannerChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
+      setBannerFile(file);
       const reader = new FileReader();
       reader.onloadend = () => {
         setBanner(reader.result as string);
@@ -69,6 +71,10 @@ export function EditProfileModal({ isOpen, onClose, user }: EditProfileModalProp
 
       if (avatarFile) {
         formData.append('avatar', avatarFile);
+      }
+
+      if (bannerFile) {
+        formData.append('banner', bannerFile);
       }
 
       const response = await authApi.updateProfile(formData);

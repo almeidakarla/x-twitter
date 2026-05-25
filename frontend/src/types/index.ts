@@ -5,6 +5,7 @@ export interface User {
   name: string;
   bio: string | null;
   avatar: string | null;
+  banner: string | null;
   location: string | null;
   website: string | null;
   createdAt: string;

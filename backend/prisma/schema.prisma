@@ -16,6 +16,7 @@ model User {
   name      String
   bio       String?
   avatar    String?
+  banner    String?
   location  String?
   website   String?
   createdAt DateTime @default(now())

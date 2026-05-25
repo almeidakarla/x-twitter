@@ -30,6 +30,9 @@ describe('UserCard - Follow Functionality', () => {
     name: 'Current User',
     bio: null,
     avatar: null,
+    banner: null,
+    location: null,
+    website: null,
     createdAt: new Date().toISOString(),
   };
 
@@ -40,6 +43,9 @@ describe('UserCard - Follow Functionality', () => {
     name: 'Other User',
     bio: 'Hello, I am another user',
     avatar: null,
+    banner: null,
+    location: null,
+    website: null,
     createdAt: new Date().toISOString(),
     isFollowing: false,
     followersCount: 100,
