@@ -86,12 +86,6 @@ export default function LoginPage() {
           Sign up
         </Link>
       </p>
-
-      <div className="mt-4 p-4 bg-gray-900 rounded-lg text-sm text-gray-400">
-        <p className="font-medium text-white mb-2">Demo credentials:</p>
-        <p>Email: demo@example.com</p>
-        <p>Password: demo1234</p>
-      </div>
     </div>
   );
 }

@@ -14,6 +14,7 @@ import { useAuthStore } from '@/store/auth';
 import { format } from 'date-fns';
 import toast from 'react-hot-toast';
 import type { Tweet } from '@/types';
+import { EditProfileModal } from '@/components/profile/edit-profile-modal';
 
 export default function ProfilePage() {
   const params = useParams();
@@ -21,6 +22,7 @@ export default function ProfilePage() {
   const { user: currentUser } = useAuthStore();
   const queryClient = useQueryClient();
   const [activeTab, setActiveTab] = useState<'tweets' | 'replies'>('tweets');
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 
   const { data: profileData, isLoading: isLoadingProfile } = useQuery({
     queryKey: ['profile', username],
@@ -128,7 +130,12 @@ export default function ProfilePage() {
           />
 
           {isOwnProfile ? (
-            <Button variant="outline" size="sm" className="mt-20">
+            <Button
+              variant="outline"
+              size="sm"
+              className="mt-20"
+              onClick={() => setIsEditModalOpen(true)}
+            >
               Edit profile
             </Button>
           ) : (
@@ -225,6 +232,15 @@ export default function ProfilePage() {
             </div>
           )}
         </div>
+      )}
+
+      {/* Edit Profile Modal */}
+      {profile && isOwnProfile && (
+        <EditProfileModal
+          isOpen={isEditModalOpen}
+          onClose={() => setIsEditModalOpen(false)}
+          user={profile}
+        />
       )}
     </div>
   );
