@@ -63,9 +63,16 @@ A full-stack Twitter/X clone built with modern web technologies. This project de
 
 ### Bonus Features
 - Real-time updates via WebSockets
-- Image uploads for tweets
+- Image uploads for tweets (with Supabase Storage)
 - Reply threads with nested conversations
+- Notifications system (likes, follows, replies)
 - Docker deployment with single command
+
+## Live Demo
+
+The application is deployed on Railway:
+- **Frontend**: [Your Railway Frontend URL]
+- **Backend API**: [Your Railway Backend URL]
 
 ## Architecture Decisions
 

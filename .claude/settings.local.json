@@ -17,7 +17,8 @@
       "Bash(npm run test:run:*)",
       "Bash(npx tsc:*)",
       "Bash(cd:*)",
-      "Bash(npx prisma:*)"
+      "Bash(npx prisma:*)",
+      "Bash(DATABASE_URL=\"postgresql://postgres:QLNipBXDXGfpnUXpPGycxrTiwZlaFGbU@zephyr.proxy.rlwy.net:52723/railway\" npx prisma db push:*)"
     ]
   }
 }
