@@ -1,6 +1,7 @@
 {
   "name": "twitter-clone-backend",
   "version": "1.0.0",
+  "type": "module",
   "description": "Twitter Clone API - Express + TypeScript + PostgreSQL",
   "main": "dist/index.js",
   "scripts": {
